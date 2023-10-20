@@ -1,7 +1,7 @@
 plugins {
     id("org.gradle.java")
     id("org.gradle.maven-publish")
-    id("org.jetbrains.kotlin.jvm") version "1.9.20-RC" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.7.22" apply false
 }
 
 subprojects {
@@ -11,6 +11,7 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven("https://repo.tabooproject.org/repository/releases")
     }
     dependencies {
         compileOnly("org.apache.commons:commons-lang3:3.13.0")
