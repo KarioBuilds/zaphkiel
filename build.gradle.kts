@@ -1,7 +1,7 @@
 plugins {
     id("org.gradle.java")
     id("org.gradle.maven-publish")
-    id("org.jetbrains.kotlin.jvm") version "1.5.31" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.9.20-RC" apply false
 }
 
 subprojects {
@@ -13,9 +13,9 @@ subprojects {
         mavenCentral()
     }
     dependencies {
-        compileOnly("org.apache.commons:commons-lang3:3.12.0")
-        compileOnly("com.google.guava:guava:30.1.1-jre")
-        compileOnly("com.google.code.gson:gson:2.8.8")
+        compileOnly("org.apache.commons:commons-lang3:3.13.0")
+        compileOnly("com.google.guava:guava:32.1.3-jre")
+        compileOnly("com.google.code.gson:gson:2.10.1")
         compileOnly("ink.ptms.core:v11904:11904:mapped")
         compileOnly("ink.ptms.core:v11200:11200")
         compileOnly(kotlin("stdlib"))

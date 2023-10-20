@@ -9,8 +9,8 @@ import org.bukkit.inventory.meta.SkullMeta
 import taboolib.common.platform.event.OptionalEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.warning
-import taboolib.common.reflect.Reflex.Companion.getProperty
-import taboolib.common.reflect.Reflex.Companion.setProperty
+import taboolib.library.reflex.Reflex.Companion.getProperty
+import taboolib.library.reflex.Reflex.Companion.setProperty
 import taboolib.library.configuration.ConfigurationSection
 import java.util.*
 

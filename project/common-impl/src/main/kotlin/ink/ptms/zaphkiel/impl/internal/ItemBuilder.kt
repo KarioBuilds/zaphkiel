@@ -6,7 +6,7 @@ import ink.ptms.zaphkiel.api.event.ItemBuildEvent
 import ink.ptms.zaphkiel.api.event.ItemReleaseEvent
 import ink.ptms.zaphkiel.impl.item.DefaultItemStreamGenerated
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.reflect.Reflex.Companion.invokeConstructor
+import taboolib.library.reflex.Reflex.Companion.invokeConstructor
 import taboolib.common.util.unsafeLazy
 import taboolib.module.chat.colored
 import taboolib.module.configuration.Configuration
