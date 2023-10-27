@@ -11,4 +11,5 @@ taboolib {
     classifier = null
     version = taboolib_version
     exclude("taboolib")
+    exclude("common")
 }
