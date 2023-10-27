@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.20-RC2" apply false
 }
 
+val taboolib_version: String by project
+
 subprojects {
     apply<JavaPlugin>()
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -20,6 +22,15 @@ subprojects {
         compileOnly("ink.ptms.core:v11904:11904:mapped")
         compileOnly("ink.ptms.core:v11200:11200")
         compileOnly(kotlin("stdlib"))
+
+        compileOnly("io.izzel.taboolib:common:$taboolib_version")
+        implementation("io.izzel.taboolib:common-5:$taboolib_version")
+        implementation("io.izzel.taboolib:module-chat:$taboolib_version")
+        implementation("io.izzel.taboolib:module-configuration:$taboolib_version")
+        implementation("io.izzel.taboolib:module-nms:$taboolib_version")
+        implementation("io.izzel.taboolib:module-nms-util:$taboolib_version")
+        implementation("io.izzel.taboolib:module-ui:$taboolib_version")
+        implementation("io.izzel.taboolib:platform-bukkit:$taboolib_version")
     }
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
