@@ -29,7 +29,7 @@ class DefaultItemManager : ItemManager {
     val registeredMeta: MutableMap<String, Class<out Meta>> = runningClasses
         .filter { it.isAnnotationPresent(MetaKey::class.java) }
         .filterIsInstance<Class<out Meta>>()
-        .associateBy { c -> c.getAnnotation(MetaKey::class.java).value }
+        .associateBy { it.getAnnotation(MetaKey::class.java).value }
         .toMutableMap()
 
     fun clearItem() {

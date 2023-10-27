@@ -1,7 +1,7 @@
 plugins {
     id("org.gradle.java")
     id("org.gradle.maven-publish")
-    id("org.jetbrains.kotlin.jvm") version "1.7.22" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.9.20-RC2" apply false
 }
 
 subprojects {
@@ -25,8 +25,8 @@ subprojects {
         options.encoding = "UTF-8"
     }
     configure<JavaPluginConvention> {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
