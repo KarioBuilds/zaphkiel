@@ -1,20 +1,36 @@
+@file:Suppress("PropertyName", "SpellCheckingInspection")
+
+import io.izzel.taboolib.gradle.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id("org.gradle.java")
-    id("org.gradle.maven-publish")
-    id("org.jetbrains.kotlin.jvm") version "1.9.20-RC2" apply false
+    java
+    id("io.izzel.taboolib") version "2.0.2"
+    id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
 val taboolib_version: String by project
 
 subprojects {
     apply<JavaPlugin>()
+    apply(plugin = "io.izzel.taboolib")
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
+    // TabooLib 配置
+    taboolib {
+        env {
+            install(UNIVERSAL, BUKKIT_ALL, NMS_UTIL, DATABASE, UI, KETHER, EXPANSION_PLAYER_DATABASE)
+        }
+        version { taboolib = "6.1.0" }
+    }
+
+    // 全局仓库
     repositories {
         mavenLocal()
         mavenCentral()
         maven("https://repo.tabooproject.org/repository/releases")
     }
+    // 全局依赖
     dependencies {
         compileOnly("org.apache.commons:commons-lang3:3.13.0")
         compileOnly("com.google.guava:guava:32.1.3-jre")
@@ -32,32 +48,20 @@ subprojects {
         implementation("io.izzel.taboolib:module-ui:$taboolib_version")
         implementation("io.izzel.taboolib:platform-bukkit:$taboolib_version")
     }
+
+    // 编译配置
+    java {
+        withSourcesJar()
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
-    configure<JavaPluginConvention> {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            url = uri("https://repo.tabooproject.org/repository/releases")
-            credentials {
-                username = project.findProperty("taboolibUsername").toString()
-                password = project.findProperty("taboolibPassword").toString()
-            }
-            authentication {
-                create<BasicAuthentication>("basic")
-            }
-        }
-    }
-    publications {
-        create<MavenPublication>("library") {
-            from(components["java"])
-            groupId = project.group.toString()
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xjvm-default=all", "-Xextended-compiler-checks")
         }
     }
 }
