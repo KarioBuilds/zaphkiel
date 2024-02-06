@@ -9,8 +9,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
-val taboolib_version: String by project
-
 subprojects {
     apply<JavaPlugin>()
     apply(plugin = "io.izzel.taboolib")
@@ -28,7 +26,6 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven("https://repo.tabooproject.org/repository/releases")
     }
     // 全局依赖
     dependencies {
@@ -38,15 +35,6 @@ subprojects {
         compileOnly("ink.ptms.core:v11904:11904:mapped")
         compileOnly("ink.ptms.core:v11200:11200")
         compileOnly(kotlin("stdlib"))
-
-        compileOnly("io.izzel.taboolib:common:$taboolib_version")
-        implementation("io.izzel.taboolib:common-5:$taboolib_version")
-        implementation("io.izzel.taboolib:module-chat:$taboolib_version")
-        implementation("io.izzel.taboolib:module-configuration:$taboolib_version")
-        implementation("io.izzel.taboolib:module-nms:$taboolib_version")
-        implementation("io.izzel.taboolib:module-nms-util:$taboolib_version")
-        implementation("io.izzel.taboolib:module-ui:$taboolib_version")
-        implementation("io.izzel.taboolib:platform-bukkit:$taboolib_version")
     }
 
     // 编译配置

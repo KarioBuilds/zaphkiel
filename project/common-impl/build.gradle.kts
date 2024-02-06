@@ -1,4 +1,5 @@
 taboolib { subproject = true }
+
 dependencies {
     compileOnly(project(":project:common"))
     compileOnly("ink.ptms:nms-all:1.0.0")
