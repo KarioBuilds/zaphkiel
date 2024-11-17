@@ -6,7 +6,7 @@ import ink.ptms.zaphkiel.impl.meta.MetaKey
 import ink.ptms.zaphkiel.item.meta.Meta
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import taboolib.common.io.runningClasses
+import taboolib.common.io.runningClassMapInJar
 import taboolib.platform.util.giveItem
 
 /**
@@ -26,10 +26,12 @@ class DefaultItemManager : ItemManager {
 
     val registeredGroup = HashMap<String, Group>()
 
-    val registeredMeta: MutableMap<String, Class<out Meta>> = runningClasses
-        .filter { it.isAnnotationPresent(MetaKey::class.java) }
-        .filterIsInstance<Class<out Meta>>()
-        .associateBy { it.getAnnotation(MetaKey::class.java).value }
+    @Suppress("UNCHECKED_CAST")
+    val registeredMeta: MutableMap<String, Class<out Meta>> = runningClassMapInJar
+        .values
+        .filter { it.hasAnnotation(MetaKey::class.java) }
+        .associateBy { c -> c.getAnnotation(MetaKey::class.java).property("value", "") }
+        .mapValues { it.value.toClass() as Class<out Meta> }
         .toMutableMap()
 
     fun clearItem() {
@@ -45,7 +47,20 @@ class DefaultItemManager : ItemManager {
     override fun giveItem(player: Player, item: Item, amount: Int): Boolean {
         val event = ItemGiveEvent(player, item.build(player), amount).also { it.call() }
         if (!event.isCancelled) {
-            player.giveItem(event.itemStream.rebuildToItemStack(player), event.amount)
+            val itemStack = event.itemStream.rebuildToItemStack(player)
+            // 物品最大堆叠数量
+            val maxStackSize = itemStack.maxStackSize
+            // 计算需要发送的次数
+            val times = event.amount / maxStackSize
+            val remainder = event.amount % maxStackSize
+            // 发送整数倍的最大堆叠数量
+            repeat(times) {
+                player.giveItem(itemStack.clone().also { it.amount = maxStackSize })
+            }
+            // 发送剩余数量
+            if (remainder > 0) {
+                player.giveItem(itemStack.clone().also { it.amount = remainder })
+            }
             return true
         }
         return false
